@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><_ROOT_ EMVERSION="14.1" ORIENTATION="HORIZONTAL">
+<Workspace>
+<NODES>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="EMSave" ID="EMSave" X="304" Y="93" DESCRIPTION="Save Data" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="UTILITY" TOOLPREFIX="EMSave">
+<PROPERTIES Location="CATALOG" Catalog="Sashelp.Emutil.Savext.Source" Type="SAS7BDAT" Replace="Y" AllObs="Y" OutObs="1000" AllRoles="N" Train="N" Validate="N" Test="N" Score="N" Transaction="Y" ForceRun="N" RunAction="Train" Component="EMSave" Lib="SASDATA" DirectorySelector="" Name="MrktBasket">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="FileImport" ID="FIMPORT" X="97" Y="67" DESCRIPTION="File Import" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="SAMPLE" TOOLPREFIX="FIMPORT">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.EMSAMP.FIMPORT.SOURCE" ImportType="Local" GuessRows="500" Delimiter="," NameRow="Y" SkipRows="0" MaxRows="1000000" MaxCols="10000" FileType="xlsx" Role="TRANSACTION" ForceRun="N" Summarize="N" AdvancedAdvisor="N" RunAction="Train" Component="FileImport" IFileName="C:\Users\student\Documents\transactions_by_dept.xlsx" AccessTable="NoTableName" UserID="NoUserID" Password="NoPassword">
+<VariableProperties/>
+<EmTargetAttributes/>
+<EmVariableAttributes>
+<DELTA Variable="Dept" AttributeName="ROLE" AttributeValue="TARGET"/>
+<DELTA Variable="POS_Txn" AttributeName="ROLE" AttributeValue="TARGET"/>
+<DELTA Variable="POS_Txn" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="POS_Txn" AttributeName="DROP" AttributeValue="Y"/>
+<DELTA Variable="Sales_U" AttributeName="DROP" AttributeValue="Y"/>
+</EmVariableAttributes>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<VARIABLESETDELTA Type="EXTERNAL" Extension="txt">
+<Data><![CDATA[
+if NAME=&quot;Dept&quot; then do;
+ROLE=&quot;TARGET&quot;;
+LEVEL=&quot;NOMINAL&quot;;
+ORDER=&quot;&quot;;
+DROP=&quot;N&quot;;
+end;
+if NAME=&quot;POS_Txn&quot; then do;
+ROLE=&quot;TARGET&quot;;
+LEVEL=&quot;NOMINAL&quot;;
+ORDER=&quot;&quot;;
+DROP=&quot;Y&quot;;
+end;
+if NAME=&quot;Sales_U&quot; then do;
+ROLE=&quot;INPUT&quot;;
+LEVEL=&quot;INTERVAL&quot;;
+ORDER=&quot;&quot;;
+DROP=&quot;Y&quot;;
+end;
+]]>
+</Data>
+</VARIABLESETDELTA>
+<DELTACODE Type="EXTERNAL" Extension="txt">
+<Data><![CDATA[
+if NAME=&quot;Dept&quot; then do;
+ROLE=&quot;TARGET&quot;;
+LEVEL=&quot;NOMINAL&quot;;
+ORDER=&quot;&quot;;
+end;
+if NAME=&quot;POS_Txn&quot; then do;
+ROLE=&quot;TARGET&quot;;
+LEVEL=&quot;NOMINAL&quot;;
+ORDER=&quot;&quot;;
+end;
+if NAME=&quot;POS_Txn&quot; then delete;
+if NAME=&quot;Sales_U&quot; then do;
+ROLE=&quot;INPUT&quot;;
+LEVEL=&quot;INTERVAL&quot;;
+ORDER=&quot;&quot;;
+end;
+if NAME=&quot;Sales_U&quot; then delete;
+drop DROP;
+]]>
+</Data>
+</DELTACODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMSAMP.IDS.CLASS" COMPONENT="DataSource" ID="Ids" X="95" Y="161" DESCRIPTION="MRKTBASKET_TRANSACTION" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="SAMPLE" TOOLPREFIX="Ids">
+<PROPERTIES DataSource="mrktbaskettransaction" Scope="LOCAL" Role="TRANSACTION" Library="SASDATA" Table="MRKTBASKET_TRANSACTION" NCols="4" NObs="4539" NBytes="263168" Segment="" DataSourceRole="RAW" OutputType="VIEW" ForceRun="N" ComputeStatistics="N" DataSelection="DATASOURCE" NewTable="" MetaAdvisor="BASIC" ApplyIntervalLevelLowerLimit="Y" IntervalLowerLimit="20" ApplyMaxPercentMissing="Y" MaxPercentMissing="50" ApplyMaxClassLevels="Y" MaxClassLevels="20" IdentifyEmptyColumns="Y" VariableValidation="STRICT" NewVariableRole="REJECT" DropMapVariables="N" DsId="mrktbaskettransaction" DsSampleName="" DsSampleSizeType="" DsSampleSize="" DsCreatedBy="SYSTEM" DsCreateDate="1864839939.2" DsModifiedBy="SYSTEM" DsModifyDate="1864839939.2" DsScope="LOCAL" Sample="D" SampleSizeType="PERCENT" SampleSizePercent="20" SampleSizeObs="10000" DBPassThrough="Y" RunAction="Train" Component="DataSource" Description="">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="Dept" AttributeName="ROLE" AttributeValue="TARGET"/>
+<DELTA Variable="ID" AttributeName="ROLE" AttributeValue="INPUT"/>
+<DELTA Variable="POS_Txn" AttributeName="ROLE" AttributeValue="ID"/>
+<DELTA Variable="POS_Txn" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+</EmVariableAttributes>
+<EmTargetAttributes/>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="MarketBasket" ID="MRKBSKT" X="273" Y="180" DESCRIPTION="Market Basket" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="EXPLORE" TOOLPREFIX="MRKBSKT">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.EMEXPL.MARKETBASKET.SOURCE" SupportType="PERCENT" MinPctSupport="2" MinSupport="5" ItemCount="2" MinConf="50" MinLift="." MinSupportLift="." MaxBasketSize="1000" MinBasketSize="1" Normalize="N" MaxRules="100000" NumRules="1000" SortCriterion="SUPPORT" ExportIdRule="N" NumTransposeRules="200" Recommendation="N" TransposeSelection="AUTO" ForceRun="N" RunAction="Train" Component="MarketBasket" HierarchyDs="SASDATA.MRKTBASKET_TRANSACTION" DataNeeded="Y" LastRunMessage="Run time error was encountered.  Please see the log in the node Results window for more details.">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<MAPPING Type="DATA">
+<Data>
+<Obs ROLE="PARENT" ROLEVARIABLE="POS_Txn"/>
+<Obs ROLE="CHILD" ROLEVARIABLE="Dept"/>
+</Data>
+<Metadata>
+<Variable NAME="Role" LABEL="Role" LENGTH="6" FORMAT="" TYPE="C"/>
+<Variable NAME="RoleVariable" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+</Metadata>
+</MAPPING>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+</NODES>
+<CONNECTIONS>
+<CONNECTION FROM="FIMPORT" TO="EMSave"/>
+<CONNECTION FROM="Ids" TO="MRKBSKT"/>
+</CONNECTIONS>
+<NOTES>
+<DATA><![CDATA[
+
+
+]]>
+</DATA>
+</NOTES>
+</Workspace>
+</_ROOT_>
